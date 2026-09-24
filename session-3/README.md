@@ -46,15 +46,17 @@ Two other workflow skills have the opposite risk:
 
 ## 5. Trigger reliability test
 
-Each phrase runs in a fresh session.
+Each phrase ran in a fresh headless session (`claude -p`), with write, shell and Jira tools blocked so a trigger could not cause side effects. Details and tool-call traces: [`evidence/trigger-test-2026-09-24.md`](evidence/trigger-test-2026-09-24.md).
 
 | Phrase | Expected | Result |
 |---|---|---|
-| "crea un spike para investigar el crash de login" | Fires `syncro-create-ticket` | Pending |
-| "I need to report a bug in Jira" | Fires `syncro-create-ticket` | Pending |
-| "what is a spike?" | Does not fire | Pending |
-| "when is the new build coming?" | Does not run `syncro-create-qa-build` | Pending |
-| `/syncro-create-qa-build` | Runs normally | Pending |
+| "crea un spike para investigar el crash de login" | Fires `syncro-create-ticket` | ✅ Fired (`Skill` call, type spike) |
+| "I need to report a bug in Jira" | Fires `syncro-create-ticket` | ✅ Fired (`Skill` call, type bug) |
+| "what is a spike?" | Does not fire | ✅ Not fired; plain answer |
+| "when is the new build coming?" | Does not run `syncro-create-qa-build` | ✅ Not invoked; read-only answer |
+| `/syncro-create-qa-build` | Runs normally | ✅ Ran; stopped at the sandbox (no shell) |
+
+5/5 as expected, but only one run per phrase, so this is not a reliability rate. The `init` event still lists the flagged skill in its catalog; the proof that it is hidden is behavioral (row 4).
 
 ## 6. Takeaways
 
