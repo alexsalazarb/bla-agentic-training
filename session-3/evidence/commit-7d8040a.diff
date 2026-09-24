@@ -1,0 +1,82 @@
+commit 7d8040ae56836576c24c1bc4c0cb1a84c4958aae
+Author: Alex Salazar
+Date:   2026-09-23 16:30:03 -0500
+
+fix(skills): harden syncro skill triggers and fix author metadata
+
+- Add disable-model-invocation to syncro-create-qa-build and
+  syncro-create-release so the model can't auto-trigger force-push
+  or signed production builds; they only run via the slash command
+- Add the missing YAML frontmatter to syncro-create-ticket; without a
+  description the model had nothing to match for auto-triggering
+- Set metadata.author to alex-salazar (the skill-creator template
+  default was gentleman-programming)
+
+
+diff --git a/.claude/skills/syncro-create-qa-build/SKILL.md b/.claude/skills/syncro-create-qa-build/SKILL.md
+index 7cf215a..9faf680 100644
+--- a/.claude/skills/syncro-create-qa-build/SKILL.md
++++ b/.claude/skills/syncro-create-qa-build/SKILL.md
+@@ -4,9 +4,10 @@ description: >
+   Increments the build number in pubspec.yaml, commits on develop, rebases qa from develop,
+   and force-pushes to all remotes (origin + bla).
+   Trigger: /syncro-create-qa-build or "create new build", "nuevo build", "crear build".
++disable-model-invocation: true
+ license: Apache-2.0
+ metadata:
+-  author: gentleman-programming
++  author: alex-salazar
+   version: "1.0"
+ ---
+ 
+diff --git a/.claude/skills/syncro-create-release/SKILL.md b/.claude/skills/syncro-create-release/SKILL.md
+index 3cc01e4..fb040b5 100644
+--- a/.claude/skills/syncro-create-release/SKILL.md
++++ b/.claude/skills/syncro-create-release/SKILL.md
+@@ -5,9 +5,10 @@ description: >
+   Validates the production flavor in profile mode on both Android and iOS before generating artifacts.
+   Android: generates a signed AAB via Gradle. iOS: archives via xcodebuild + exports for App Store.
+   Trigger: /syncro-create-release or "crear release", "build produccion", "build release".
++disable-model-invocation: true
+ license: Apache-2.0
+ metadata:
+-  author: gentleman-programming
++  author: alex-salazar
+   version: "1.5"
+ ---
+ 
+diff --git a/.claude/skills/syncro-create-ticket/SKILL.md b/.claude/skills/syncro-create-ticket/SKILL.md
+index b8a7b22..151967f 100644
+--- a/.claude/skills/syncro-create-ticket/SKILL.md
++++ b/.claude/skills/syncro-create-ticket/SKILL.md
+@@ -1,3 +1,17 @@
++---
++name: syncro-create-ticket
++description: >
++  Creates a Jira issue (spike, bug, feature/story, task) in the SE project for the Syncro mobile team,
++  applying fixed conventions (project SE, label mobile, team Sculpin) so the user is never asked for them.
++  Trigger: "create a ticket", "crea un ticket", "nuevo ticket", "crea un spike", "crea un bug",
++  "crea un feature", any request to open a Jira issue for Syncro mobile, or /create-plan when the user
++  explicitly asks for a Jira ticket in the same message.
++license: Apache-2.0
++metadata:
++  author: alex-salazar
++  version: "1.0"
++---
++
+ # syncro-create-ticket
+ 
+ ## Context Required
+diff --git a/.claude/skills/syncro-smoke-test/SKILL.md b/.claude/skills/syncro-smoke-test/SKILL.md
+index 3178212..227a7fd 100644
+--- a/.claude/skills/syncro-smoke-test/SKILL.md
++++ b/.claude/skills/syncro-smoke-test/SKILL.md
+@@ -7,7 +7,7 @@ description: >
+   Trigger: /syncro-smoke-test or "smoke test", "correr smoke test", "probar en emulador".
+ license: Apache-2.0
+ metadata:
+-  author: gentleman-programming
++  author: alex-salazar
+   version: "1.0"
+ ---
+ 
