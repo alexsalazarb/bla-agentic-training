@@ -23,6 +23,8 @@ Before each push, everything here goes through the sanitization scan defined in 
 |---|---|---|
 | 3 | Skills, Hooks & Commands | [Skill + triggering observation](session-3/) |
 | 4 | Memory & Self-Improvement | [memory-bank + self-improvement loop](session-4/) |
+| 5 | Agent Orchestration, MCP & CLI Tools | [MCP inventory + Jira CLI wrapper/skill + before/after measurement](session-5/) |
+| 6 | Designer & QA Workflows (QA track) | [Test generation workflow: 18 tests for an untested utility](session-6/) |
 
 Each session folder contains a `README.md` (what was asked, what I built, what I observed), an `evidence/` folder, and the artifacts.
 
