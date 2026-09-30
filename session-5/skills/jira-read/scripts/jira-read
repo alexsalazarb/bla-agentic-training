@@ -1,0 +1,92 @@
+#!/usr/bin/env bash
+# jira-read — read-only Jira Cloud client (curl + jq). Replaces the Atlassian MCP
+# for the frequent, predictable reads: one issue, or a JQL search.
+#
+# Usage:
+#   jira-read issue <KEY> [--comments N]   # default: last 5 comments
+#   jira-read search '<JQL>' [--max N]      # default: 20 results, one line each
+#
+# Config (never committed):
+#   JIRA_SITE   e.g. https://<your-site>.atlassian.net
+#   JIRA_EMAIL  your Atlassian login email
+#   token       macOS Keychain item "atlassian-api-token", or JIRA_API_TOKEN
+# JIRA_SITE and JIRA_EMAIL can live in ~/.config/jira-read/env.
+set -euo pipefail
+
+CONFIG_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/jira-read/env"
+# shellcheck source=/dev/null
+[[ -f "$CONFIG_FILE" ]] && source "$CONFIG_FILE"
+
+: "${JIRA_SITE:?set JIRA_SITE (see $CONFIG_FILE)}"
+: "${JIRA_EMAIL:?set JIRA_EMAIL (see $CONFIG_FILE)}"
+KEYCHAIN_SERVICE="atlassian-api-token"
+TOKEN="${JIRA_API_TOKEN:-$(security find-generic-password -a "$USER" -s "$KEYCHAIN_SERVICE" -w 2>/dev/null || true)}"
+[[ -n "$TOKEN" ]] || { echo "jira-read: no API token (Keychain '$KEYCHAIN_SERVICE' or JIRA_API_TOKEN)" >&2; exit 1; }
+
+# Atlassian Document Format -> plain text. Keeps line breaks, mentions and links.
+ADF='def adf:
+  if type == "object" then
+    if .type == "text" then .text
+    elif .type == "hardBreak" then "\n"
+    elif .type == "mention" then (.attrs.text // "@user")
+    elif .type == "inlineCard" then (.attrs.url // "")
+    else ((.content // []) | map(adf) | join(""))
+      + (if (.type | IN("paragraph","heading","listItem","codeBlock","blockquote","panel")) then "\n" else "" end)
+    end
+  elif type == "array" then map(adf) | join("")
+  else "" end;'
+
+api_get() {
+  local path="$1" body status
+  body=$(curl -sS -w '\n%{http_code}' -u "$JIRA_EMAIL:$TOKEN" -H 'Accept: application/json' "$JIRA_SITE$path")
+  status="${body##*$'\n'}"
+  body="${body%$'\n'*}"
+  if [[ "$status" != "200" ]]; then
+    echo "jira-read: HTTP $status for $path" >&2
+    jq -r '(.errorMessages // [])[] , ((.errors // {}) | to_entries[] | "\(.key): \(.value)")' <<<"$body" >&2 2>/dev/null || true
+    exit 1
+  fi
+  printf '%s' "$body"
+}
+
+cmd_issue() {
+  local key="${1:?usage: jira-read issue <KEY> [--comments N]}" comments=5
+  shift
+  [[ "${1:-}" == "--comments" ]] && comments="${2:?--comments needs a number}"
+  local fields="summary,status,issuetype,priority,assignee,reporter,labels,parent,created,updated,description,comment,issuelinks"
+  api_get "/rest/api/3/issue/$key?fields=$fields" | jq -r --argjson n "$comments" "$ADF"'
+    .fields as $f
+    | "\(.key) · \($f.issuetype.name) · \($f.status.name) · \($f.priority.name // "-")",
+      "Summary:  \($f.summary)",
+      "Assignee: \($f.assignee.displayName // "Unassigned")  |  Reporter: \($f.reporter.displayName // "-")",
+      "Labels:   \(($f.labels // []) | join(", "))  |  Parent: \($f.parent.key // "-")",
+      "Updated:  \($f.updated[0:16])  |  Created: \($f.created[0:16])",
+      (if (($f.issuelinks // []) | length) > 0 then
+        "Links:    " + ([$f.issuelinks[] | "\(.type.outward) \(.outwardIssue.key // empty)", "\(.type.inward) \(.inwardIssue.key // empty)"]
+          | map(select(test(" [A-Z]+-[0-9]+$"))) | join("; "))
+      else empty end),
+      "",
+      "## Description",
+      (($f.description | adf) // "" | if . == "" then "(empty)" else . end),
+      "## Comments (last \($n) of \($f.comment.total))",
+      ($f.comment.comments[-$n:][]? | "--- \(.author.displayName) · \(.created[0:16]) · id \(.id)\n\(.body | adf)")
+  '
+}
+
+cmd_search() {
+  local jql="${1:?usage: jira-read search '<JQL>' [--max N]}" max=20
+  shift
+  [[ "${1:-}" == "--max" ]] && max="${2:?--max needs a number}"
+  local q
+  q=$(jq -rn --arg jql "$jql" '$jql | @uri')
+  api_get "/rest/api/3/search/jql?jql=$q&maxResults=$max&fields=summary,status,assignee,issuetype,updated" | jq -r '
+    .issues[] | .fields as $f
+    | "\(.key)\t\($f.status.name)\t\($f.issuetype.name)\t\($f.assignee.displayName // "Unassigned")\t\($f.updated[0:10])\t\($f.summary)"
+  '
+}
+
+case "${1:-}" in
+  issue)  shift; cmd_issue "$@" ;;
+  search) shift; cmd_search "$@" ;;
+  *) sed -n '2,13p' "$0" | sed 's/^# \{0,1\}//'; exit 1 ;;
+esac
