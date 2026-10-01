@@ -1,0 +1,20 @@
+00:00 +0: loading test/core/utils/string_helper_test.dart
+00:00 +0: isURLValid returns false for null
+00:00 +1: isURLValid returns false for an empty string
+00:00 +2: isURLValid returns false when the URL contains an inner space
+00:00 +3: isURLValid returns false for a trailing space (input is not trimmed)
+00:00 +4: isURLValid rejects www. host without a further label (backtracking guard)
+00:00 +5: isURLValid accepts a www. host with a TLD
+00:00 +6: isURLValid accepts a bare domain without scheme
+00:00 +7: isURLValid rejects a single word without TLD
+00:00 +8: isURLValid accepts an http URL
+00:00 +9: isURLValid accepts an https URL
+00:00 +10: isURLValid accepts a URL with path, query and fragment
+00:00 +11: extractUrl returns null for null
+00:00 +12: extractUrl returns null when the text has no URL
+00:00 +13: extractUrl returns the first URL when the text has several
+00:00 +14: extractUrl extracts a www. URL without scheme
+00:00 +15: extractUrl strips a trailing period after the URL
+00:00 +16: extractUrl strips a trailing closing parenthesis
+00:00 +17: extractUrl returns null when the stripped candidate is no longer valid
+00:00 +18: All tests passed!

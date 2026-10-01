@@ -1,0 +1,12 @@
+# Mutation: www. guard disabled in isURLValid()
+#   if (withoutScheme.toLowerCase().startsWith('www.') && ...)
+#   -> if (false && withoutScheme.toLowerCase().startsWith('www.') && ...)
+# Command: fvm flutter test test/core/utils/string_helper_test.dart --reporter expanded
+# (failures only; source restored with git checkout afterwards)
+00:00 +4 -1: isURLValid rejects www. host without a further label (backtracking guard) [E]
+  Expected: false
+    Actual: <true>
+00:00 +16 -2: extractUrl returns null when the stripped candidate is no longer valid [E]
+  Expected: null
+    Actual: 'www.google'
+00:00 +16 -2: Some tests failed.

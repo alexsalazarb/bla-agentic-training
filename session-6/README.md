@@ -3,9 +3,9 @@
 **Deliverable (2 of 2 this week): test generation workflow.** Pick a function, run the 5-step workflow, and arrive with 3+ tests you have read and understand.
 
 - Result: **18 unit tests**, all passing, for two functions that had **zero** tests
-- Evidence: [`evidence/test-run.md`](evidence/test-run.md)
+- Evidence: [`evidence/test-run.md`](evidence/test-run.md), with raw logs [`flutter-test.log`](evidence/flutter-test.log), [`flutter-analyze.log`](evidence/flutter-analyze.log) and a mutation check [`mutation-test.log`](evidence/mutation-test.log) (guard disabled → exactly the 2 targeted tests fail)
 
-> Context: real code from the Syncro MSP mobile app (Flutter), trainer-approved. The app code is private, so **no source or test code is published here**. This page describes the functions and the cases; the tests live on a branch in the private repo.
+> Context: real code from the Syncro MSP mobile app (Flutter), trainer-approved. The app code is private, so **no source or test code is published here**. This page describes the functions and the cases; the tests were written and run in a throwaway worktree of the private repo, then deleted (the client repo keeps nothing from this training).
 
 ## The target
 
