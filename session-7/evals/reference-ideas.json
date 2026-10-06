@@ -1,0 +1,17 @@
+[
+  {
+    "id": "slack-bot",
+    "idea": "A Slack bot that summarizes each team channel's daily standup thread and posts a 5-bullet digest to the manager every evening.",
+    "expected": "go"
+  },
+  {
+    "id": "translation-earbuds",
+    "idea": "Real-time translation earbuds that let two people speaking different languages hold a natural face-to-face conversation.",
+    "expected": "derisk"
+  },
+  {
+    "id": "ai-for-everything",
+    "idea": "AI for everything: a platform that uses AI to improve any business process for any company.",
+    "expected": "shelve"
+  }
+]

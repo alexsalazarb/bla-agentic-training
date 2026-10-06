@@ -1,0 +1,186 @@
+[
+  {
+    "at": "2026-10-06T17:35:03+00:00",
+    "idea": "A Slack bot that summarizes each team channel's daily standup thread and posts a 5-bullet digest to the manager every evening.",
+    "poc": 85,
+    "market": 53,
+    "verdict": {
+      "key": "validate",
+      "label": "🔍 Validate Demand",
+      "meaning": "Buildable — but prove someone wants it."
+    },
+    "scores": {
+      "novelty": {
+        "score": 9,
+        "reason": "Commodity combination of Slack API, a cron job and an LLM summarization call; Geekbot, Standuply and Slack AI recaps already ship this."
+      },
+      "scope": {
+        "score": 8,
+        "reason": "One job (standup thread → 5-bullet digest), fixed format, single recipient, fixed schedule; minor fuzzy edges on thread detection and per-channel vs single digest."
+      },
+      "resources": {
+        "score": 9,
+        "reason": "Slack Web API/Bolt (conversations.replies, chat.postMessage) and an LLM API are public, cheap and documented; only friction is workspace admin approval."
+      },
+      "outcome": {
+        "score": 8,
+        "reason": "A digest visibly lands in the manager's DM each evening; judging accuracy needs a small eval set or manager feedback."
+      },
+      "pain": {
+        "score": 4,
+        "reason": "Reading a standup thread is a mild, occasional annoyance; the idea names no cost and existing standup bots and Slack AI recaps are 'good enough'."
+      },
+      "pay": {
+        "score": 7,
+        "reason": "Manager/org is a clear buyer with a time-saving ROI story and teams do pay for such bots, but many will expect it bundled with Slack AI."
+      },
+      "size": {
+        "score": 7,
+        "reason": "Tens of thousands of Slack-using engineering/ops orgs running standups in threads; solid B2B segment, short of millions."
+      },
+      "moat": {
+        "score": 2,
+        "reason": "Thin LLM wrapper already offered by Slack AI, Geekbot and Standuply; no proprietary data, integration depth or network effect named."
+      }
+    }
+  },
+  {
+    "at": "2026-10-06T17:47:12+00:00",
+    "idea": "A Slack bot that summarizes each team channel's daily standup thread and posts a 5-bullet digest to the manager every evening.",
+    "poc": 85,
+    "market": 50,
+    "verdict": {
+      "key": "validate",
+      "label": "🔍 Validate Demand",
+      "meaning": "Buildable — but prove someone wants it."
+    },
+    "scores": {
+      "novelty": {
+        "score": 9,
+        "reason": "Reading a Slack standup thread via the Slack API, summarizing it with an LLM call into 5 bullets, and DMing it on a cron schedule is commodity tech; Slack summarizer bots are already shipped widely."
+      },
+      "scope": {
+        "score": 8,
+        "reason": "Clear input (each channel's daily standup thread) and output (5-bullet digest to the manager each evening), one user, one job; small fuzzy edges on thread detection, per-channel vs combined digest, timezone."
+      },
+      "resources": {
+        "score": 9,
+        "reason": "Only the Slack Web/Events API and one commodity LLM call are needed, well documented and free to build against; workspace admin approval is a minor gate."
+      },
+      "outcome": {
+        "score": 8,
+        "reason": "Clear observable outcome: a 5-bullet digest posted to the manager each evening; summary accuracy needs a small eval set or manager feedback."
+      },
+      "pain": {
+        "score": 5,
+        "reason": "Reading each channel's standup thread is a real, daily recurring cost, but small per instance (a few minutes of skimming), with no hair-on-fire risk or money loss."
+      },
+      "pay": {
+        "score": 5,
+        "reason": "Plausible buyer (engineering manager, per-seat Slack app budget), but standup summarization is bundled free or cheap in Slack AI, Geekbot and Standuply, and no ROI story beyond saving a few minutes."
+      },
+      "size": {
+        "score": 6,
+        "reason": "Solid reachable segment of tens of thousands of Slack teams running async standups, with the App Directory as distribution; limited to text-standup Slack teams."
+      },
+      "moat": {
+        "score": 3,
+        "reason": "Thin LLM wrapper a weekend clone could build; Slack's native AI recaps or Geekbot/Standuply could add it as a feature; no proprietary data or network effects."
+      }
+    }
+  },
+  {
+    "at": "2026-10-06T18:24:29+00:00",
+    "idea": "Crear una tienda web para venta de velas aromaticas y de meditacion",
+    "poc": 79,
+    "market": 40,
+    "verdict": {
+      "key": "validate",
+      "label": "🔍 Validate Demand",
+      "meaning": "Buildable — but prove someone wants it."
+    },
+    "borderline": [],
+    "scores": {
+      "novelty": {
+        "score": 10,
+        "reason": "A web store for aromatic and meditation candles is a standard e-commerce build (Shopify, WooCommerce, Stripe checkout, product catalog and cart) that has been shipped thousands of times, with no novel technical problem.",
+        "samples": [
+          10,
+          10,
+          10
+        ],
+        "spread": 0
+      },
+      "scope": {
+        "score": 6,
+        "reason": "The idea names one product category (aromatic and meditation candles) and one job (an online store), so the core is clear. But 'tienda web' bundles catalog, cart, payments, shipping, inventory and admin, and it doesn't say who the user is (buyer or seller) or what is left out. A PoC would first need a scoping decision, such as a catalog plus checkout for a handful of products.",
+        "samples": [
+          6,
+          6,
+          6
+        ],
+        "spread": 0
+      },
+      "resources": {
+        "score": 9,
+        "reason": "A web store for aromatic and meditation candles can be built tomorrow with Shopify or Medusa, Stripe or MercadoPago payments, and public shipping APIs, all cheap and well documented. The only soft spot is sourcing physical candle inventory or a supplier, which is not software and does not block a PoC storefront.",
+        "samples": [
+          9,
+          9,
+          9
+        ],
+        "spread": 0
+      },
+      "outcome": {
+        "score": 7,
+        "reason": "A web store for aromatic and meditation candles has a fairly observable PoC result (the storefront loads, a product can be added to the cart and checkout completes with a test payment), but the idea states no explicit success metric, and real success (sales) needs longer-term usage to judge.",
+        "samples": [
+          7,
+          7,
+          7
+        ],
+        "spread": 0
+      },
+      "pain": {
+        "score": 2,
+        "reason": "The idea (a web store selling aromatic and meditation candles) names no customer problem or sufferer: buying candles is a discretionary, occasional nice-to-have purchase with no stated cost in time, money or risk, and no workaround. The lesson about existing alternatives does not apply here, because there is no identified pain to begin with.",
+        "samples": [
+          2,
+          2,
+          2
+        ],
+        "spread": 0
+      },
+      "pay": {
+        "score": 6,
+        "reason": "Consumers already pay for aromatic and meditation candles (an established paid category with clear buyers via an online store), so monetization is direct per-sale. But the idea names no differentiator, and shoppers pay for candles on Etsy, Amazon and brand sites, so willingness to pay depends on execution rather than a clear ROI story.",
+        "samples": [
+          6,
+          6,
+          6
+        ],
+        "spread": 0
+      },
+      "size": {
+        "score": 6,
+        "reason": "An online store for aromatic and meditation candles targets a large consumer market (millions of candle buyers and wellness-minded shoppers) that is easy to reach through e-commerce. But the idea names no specific segment or differentiator, and it competes in a crowded general candle and home-fragrance space, so it fits a solid but not exceptional segment.",
+        "samples": [
+          6,
+          6,
+          6
+        ],
+        "spread": 0
+      },
+      "moat": {
+        "score": 2,
+        "reason": "A generic web store for aromatic and meditation candles has no stated proprietary asset, brand, or unique product: Shopify templates make it a weekend clone, and Amazon, Etsy and established candle brands already sell the same goods. The idea names no niche focus, exclusive supplier, or distribution edge that would slow copycats.",
+        "samples": [
+          2,
+          2,
+          2
+        ],
+        "spread": 0
+      }
+    }
+  }
+]

@@ -25,6 +25,7 @@ Before each push, everything here goes through the sanitization scan defined in 
 | 4 | Memory & Self-Improvement | [memory-bank + self-improvement loop](session-4/) |
 | 5 | Agent Orchestration, MCP & CLI Tools | [MCP inventory + Jira CLI wrapper/skill + before/after measurement](session-5/) |
 | 6 | Designer & QA Workflows (QA track) | [Test generation workflow: 18 tests for an untested utility](session-6/) |
+| 7 | Capstone (Team 5) | [V-Score Validator v2: orchestrator + 8 blind scorer sub-agents, tested aggregator, memory + self-learning](session-7/) |
 
 Each session folder contains a `README.md` (what was asked, what I built, what I observed), an `evidence/` folder, and the artifacts.
 

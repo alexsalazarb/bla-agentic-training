@@ -1,0 +1,32 @@
+# python3 -m unittest discover -s tests -v  (2026-10-06)
+test_64_is_low (test_score.TestAggregate.test_64_is_low) ... ok
+test_all_ones_is_10_10_shelve (test_score.TestAggregate.test_all_ones_is_10_10_shelve) ... ok
+test_all_tens_is_100_100_go (test_score.TestAggregate.test_all_tens_is_100_100_go) ... ok
+test_high_poc_low_market_is_validate_demand (test_score.TestAggregate.test_high_poc_low_market_is_validate_demand) ... ok
+test_low_poc_high_market_is_derisk (test_score.TestAggregate.test_low_poc_high_market_is_derisk) ... ok
+test_tie_at_exactly_65_is_high (test_score.TestAggregate.test_tie_at_exactly_65_is_high) ... ok
+test_weights_applied_per_criterion (test_score.TestAggregate.test_weights_applied_per_criterion) ... ok
+test_axis_within_5_of_threshold_is_flagged (test_score.TestBorderline.test_axis_within_5_of_threshold_is_flagged) ... ok
+test_edges_of_band_are_inclusive (test_score.TestBorderline.test_edges_of_band_are_inclusive) ... ok
+test_outside_band_not_flagged (test_score.TestBorderline.test_outside_band_not_flagged) ... ok
+test_report_silent_when_clear (test_score.TestBorderline.test_report_silent_when_clear) ... ok
+test_report_warns_on_borderline (test_score.TestBorderline.test_report_warns_on_borderline) ... ok
+test_empty_samples_rejected (test_score.TestMedianOfSamples.test_empty_samples_rejected) ... ok
+test_even_count_uses_lower_median_to_stay_integer (test_score.TestMedianOfSamples.test_even_count_uses_lower_median_to_stay_integer) ... ok
+test_invalid_sample_rejected (test_score.TestMedianOfSamples.test_invalid_sample_rejected) ... ok
+test_median_of_three_is_used (test_score.TestMedianOfSamples.test_median_of_three_is_used) ... ok
+test_reason_comes_from_the_median_sample (test_score.TestMedianOfSamples.test_reason_comes_from_the_median_sample) ... ok
+test_report_shows_samples (test_score.TestMedianOfSamples.test_report_shows_samples) ... ok
+test_samples_and_spread_are_kept (test_score.TestMedianOfSamples.test_samples_and_spread_are_kept) ... ok
+test_recall_empty_bank_returns_none (test_score.TestMemory.test_recall_empty_bank_returns_none) ... ok
+test_recall_returns_most_similar (test_score.TestMemory.test_recall_returns_most_similar) ... ok
+test_save_appends_run (test_score.TestMemory.test_save_appends_run) ... ok
+test_empty_reason_rejected (test_score.TestValidation.test_empty_reason_rejected) ... ok
+test_missing_criterion_rejected (test_score.TestValidation.test_missing_criterion_rejected) ... ok
+test_non_integer_rejected (test_score.TestValidation.test_non_integer_rejected) ... ok
+test_out_of_range_rejected (test_score.TestValidation.test_out_of_range_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 26 tests in 0.007s
+
+OK
